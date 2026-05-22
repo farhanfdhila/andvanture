@@ -11,10 +11,13 @@
     ],
     "env": {
         "APP_ENV": "production",
-        "APP_DEBUG": "true", 
+        "APP_DEBUG": "true",
+        "VIEW_COMPILED_PATH": "/tmp",
         "CACHE_DRIVER": "array",
         "SESSION_DRIVER": "cookie",
         "LOG_CHANNEL": "stderr",
-        "VIEW_COMPILED_PATH": "/tmp"
+        "CONFIG_CACHE_DRIVER": "array",
+        "ROUTE_CACHE_DRIVER": "array",
+        "VIEW_CACHE_DRIVER": "array"
     }
 }
