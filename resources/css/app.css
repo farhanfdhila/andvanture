@@ -1,0 +1,17 @@
+@import "tailwindcss";
+
+@theme {
+  --color-memphis-yellow: #FFD166;
+  --color-memphis-pink: #EF476F;
+  --color-memphis-blue: #118AB2;
+  --color-memphis-mint: #06D6A0;
+  
+  --shadow-memphis: 6px 6px 0px 0px rgba(0,0,0,1);
+  --shadow-memphis-hover: 10px 10px 0px 0px rgba(0,0,0,1);
+}
+
+body {
+  background-color: #f8f9fa;
+  background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
+  background-size: 30px 30px;
+}
