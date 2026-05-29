@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Andvanturee</title>
+    <meta name="description" content="A little journey through time of Aan — cerita petualangan mendaki gunung dan menjelajah alam.">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #111827;
+            padding: 1.5rem 1.5rem;
+            overflow-x: hidden;
+            background-color: #f8f9fa;
+            background-image: radial-gradient(#cbd5e1 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+
+        @media (min-width: 768px) {
+            body { padding: 3rem; }
+        }
+
+        /* ===== COLORS ===== */
+        :root {
+            --memphis-yellow: #FFD166;
+            --memphis-pink: #EF476F;
+            --memphis-blue: #118AB2;
+            --memphis-mint: #06D6A0;
+            --shadow-memphis: 6px 6px 0px 0px rgba(0,0,0,1);
+        }
+
+        /* ===== HEADER ===== */
+        header {
+            max-width: 72rem;
+            margin: 0 auto 4rem auto;
+            position: relative;
+        }
+
+        .header-box {
+            position: relative;
+            z-index: 10;
+            background-color: var(--memphis-mint);
+            border: 4px solid black;
+            padding: 2rem;
+            box-shadow: var(--shadow-memphis);
+            display: inline-block;
+        }
+
+        .header-box h1 {
+            font-size: clamp(2.5rem, 6vw, 3.75rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: -0.025em;
+            margin-bottom: 1rem;
+        }
+
+        .header-subtitle {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: white;
+            display: inline-block;
+            padding: 0 0.5rem;
+            border: 2px solid black;
+            transform: rotate(-2deg);
+        }
+
+        /* ===== MAIN GRID ===== */
+        main {
+            max-width: 72rem;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem;
+        }
+
+        @media (min-width: 768px) {
+            main { grid-template-columns: repeat(2, 1fr); }
+        }
+
+        @media (min-width: 1024px) {
+            main { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        /* ===== CARD ===== */
+        article {
+            background: white;
+            border: 4px solid black;
+            box-shadow: var(--shadow-memphis);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        article:hover {
+            transform: translateY(-8px);
+            box-shadow: 10px 10px 0px 0px rgba(0,0,0,1);
+        }
+
+        .card-image-wrap {
+            height: 14rem;
+            border-bottom: 4px solid black;
+            position: relative;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .card-image-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%);
+            transition: filter 0.5s ease;
+        }
+
+        article:hover .card-image-wrap img {
+            filter: grayscale(0%);
+        }
+
+        .badge {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background-color: var(--memphis-pink);
+            color: white;
+            font-weight: 700;
+            padding: 0.25rem 0.75rem;
+            border: 2px solid black;
+            transform: rotate(-3deg);
+            z-index: 10;
+            font-size: 0.875rem;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-sub {
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #4b5563;
+            margin-bottom: 1rem;
+        }
+
+        .card-date {
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        /* ===== BUTTONS ===== */
+        .btn {
+            display: block;
+            text-align: center;
+            width: 100%;
+            font-weight: 700;
+            padding: 0.75rem 1rem;
+            border: 4px solid black;
+            box-shadow: var(--shadow-memphis);
+            transition: all 0.15s ease;
+            text-decoration: none;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            cursor: pointer;
+            margin-top: auto;
+        }
+
+        .btn:active {
+            transform: translate(1px, 1px);
+            box-shadow: none;
+        }
+
+        .btn-blue {
+            background-color: var(--memphis-blue);
+            color: white;
+        }
+        .btn-blue:hover {
+            background-color: white;
+            color: var(--memphis-blue);
+        }
+
+        .btn-pink {
+            background-color: var(--memphis-pink);
+            color: white;
+        }
+        .btn-pink:hover {
+            background-color: white;
+            color: var(--memphis-pink);
+        }
+
+        .btn-yellow {
+            background-color: var(--memphis-yellow);
+            color: black;
+        }
+        .btn-yellow:hover {
+            background-color: white;
+            color: black;
+        }
+
+        .btn-mint {
+            background-color: var(--memphis-mint);
+            color: black;
+        }
+        .btn-mint:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-box">
+            <h1>Reminiscence</h1>
+            <p class="header-subtitle">A little journey through time of Aan</p>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- Card 1: Gunung Merbabu -->
+        <article>
+            <div class="card-image-wrap">
+                <img src="/images/merbabu.jpg" alt="Gunung Merbabu">
+                <div class="badge">Jawa Tengah</div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Gunung Merbabu</h2>
+                <p class="card-sub">Via Gancik Selo</p>
+                <p class="card-date">13 - 15 November 2024</p>
+                <a href="/cerita/gunung-merbabu/" class="btn btn-blue">Look a Story -></a>
+            </div>
+        </article>
+
+        <!-- Card 2: Gunung Pangrango -->
+        <article>
+            <div class="card-image-wrap">
+                <img src="/images/pangrango.jpg" alt="Gunung Pangrango">
+                <div class="badge">Jawa Barat</div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Gunung Pangrango</h2>
+                <p class="card-sub">Via Cibodas</p>
+                <p class="card-date">7 Mei 2026</p>
+                <a href="/cerita/gunung-pangrango/" class="btn btn-pink">Look a Story -></a>
+            </div>
+        </article>
+
+        <!-- Card 3: Gunung Salak 1 -->
+        <article>
+            <div class="card-image-wrap">
+                <img src="/images/salak1.jpg" alt="Gunung Salak 1">
+                <div class="badge">Jawa Barat</div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Gunung Salak 1</h2>
+                <p class="card-sub">Via Cimelati</p>
+                <p class="card-date">13 April 2024</p>
+                <a href="/cerita/gunung-salak-1/" class="btn btn-yellow">Look a Story -></a>
+            </div>
+        </article>
+
+        <!-- Card 4: Gunung Salak 2 -->
+        <article>
+            <div class="card-image-wrap">
+                <img src="/images/salak2.jpg" alt="Gunung Salak 2">
+                <div class="badge">Jawa Barat</div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Gunung Salak 2</h2>
+                <p class="card-sub">Via Ajisaka</p>
+                <p class="card-date">10 Oktober 2024</p>
+                <a href="/cerita/gunung-salak-2/" class="btn btn-mint">Look a Story -></a>
+            </div>
+        </article>
+
+        <!-- Card 5: Gunung Butik -->
+        <article>
+            <div class="card-image-wrap">
+                <img src="/images/butik.jpg" alt="Gunung Butik" style="object-position: 30% 60%;">
+                <div class="badge">Jawa Barat</div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Gunung Butik</h2>
+                <p class="card-sub">Via Hanjawong</p>
+                <p class="card-date">21 Agustus 2024</p>
+                <a href="/cerita/gunung-butik/" class="btn btn-blue">Look a Story -></a>
+            </div>
+        </article>
+
+        <!-- Card 6: Puncak Lumut -->
+        <article>
+            <div class="card-image-wrap">
+                <img src="/images/lumut.jpg" alt="Puncak Lumut">
+                <div class="badge">Jawa Barat</div>
+            </div>
+            <div class="card-body">
+                <h2 class="card-title">Puncak Lumut</h2>
+                <p class="card-sub">Via Sukamakmur</p>
+                <p class="card-date">28 Juli 2025</p>
+                <a href="/cerita/puncak-lumut/" class="btn btn-pink">Look a Story -></a>
+            </div>
+        </article>
+
+    </main>
+
+</body>
+</html>
