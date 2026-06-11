@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galeri Pendakian - Reminiscence</title>
+    <meta name="description" content="Kumpulan foto-foto dari semua pendakian Aan — Merbabu, Pangrango, Salak, Butik, Puncak Lumut.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+    <style>
+        :root {
+            --bg-color: #0B1120;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #10B981;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Fixed Back Button */
+        .btn-back {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 100;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-back:hover { background: rgba(255,255,255,0.15); transform: translateX(-4px); }
+        .btn-back svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+        /* Hero Section */
+        .gallery-hero {
+            width: 100%;
+            height: 70vh;
+            min-height: 400px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to bottom, rgba(11,17,32,0.4), var(--bg-color)), url('/images/merbabu2.jpg') center 65%/cover no-repeat;
+            overflow: hidden;
+        }
+        .gallery-hero::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .gallery-hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+        .gallery-hero-content h1 {
+            font-size: clamp(2.5rem, 7vw, 4.5rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gallery-hero-content p {
+            color: var(--text-muted);
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            font-weight: 300;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Filter Tabs */
+        .filter-bar {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 20px 1rem 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .filter-btn {
+            background: var(--card-bg);
+            color: var(--text-muted);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+
+        /* Gallery Grid */
+        .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 20px 4rem 20px;
+        }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+        @media (min-width: 768px) {
+            .gallery-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        @media (min-width: 1024px) {
+            .gallery-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+
+        .gallery-item {
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 1;
+            cursor: pointer;
+            position: relative;
+        }
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.08);
+        }
+        .gallery-item .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            display: flex;
+            align-items: flex-end;
+            padding: 12px;
+        }
+        .gallery-item:hover .overlay { opacity: 1; }
+        .overlay span {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        /* Hidden items for filter */
+        .gallery-item.hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .btn-back { top: 12px; left: 12px; padding: 8px 14px; font-size: 0.8rem; }
+            .gallery-hero { height: 40vh; min-height: 250px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+            .filter-bar { padding: 1.5rem 16px 0.5rem 16px; }
+            .gallery-container { padding: 1rem 16px 3rem 16px; }
+        }
+    </style>
+</head>
+<body>
+
+    <a href="/" class="btn-back">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        Beranda
+    </a>
+
+    <header class="gallery-hero">
+        <div class="gallery-hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <h1>Galeri Pendakian</h1>
+            <p>Kumpulan foto dari semua perjalanan dan petualangan.</p>
+        </div>
+    </header>
+
+    <!-- Filter -->
+    <div class="filter-bar" data-aos="fade-up">
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="merbabu">Merbabu</button>
+        <button class="filter-btn" data-filter="pangrango">Pangrango</button>
+        <button class="filter-btn" data-filter="salak1">Salak 1</button>
+        <button class="filter-btn" data-filter="salak2">Salak 2</button>
+        <button class="filter-btn" data-filter="butik">Butik</button>
+        <button class="filter-btn" data-filter="lumut">Puncak Lumut</button>
+    </div>
+
+    <!-- Gallery -->
+    <div class="gallery-container">
+        <div class="gallery-grid">
+
+            <!-- Merbabu -->
+            <a href="/images/merbabu.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="merbabu" data-aos="zoom-in">
+                <img src="/images/merbabu.jpg" alt="Gunung Merbabu">
+                <div class="overlay"><span>Gunung Merbabu</span></div>
+            </a>
+            <a href="/images/merbabu1-a.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="merbabu" data-aos="zoom-in" data-aos-delay="50">
+                <img src="/images/merbabu1-a.jpg" alt="Merbabu 1">
+                <div class="overlay"><span>Gunung Merbabu</span></div>
+            </a>
+            <a href="/images/merbabu1-b.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="merbabu" data-aos="zoom-in" data-aos-delay="100">
+                <img src="/images/merbabu1-b.jpg" alt="Merbabu 2">
+                <div class="overlay"><span>Gunung Merbabu</span></div>
+            </a>
+
+            <!-- Pangrango -->
+            <a href="/images/pangrango.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="pangrango" data-aos="zoom-in" data-aos-delay="150">
+                <img src="/images/pangrango.jpg" alt="Gunung Pangrango">
+                <div class="overlay"><span>Gunung Pangrango</span></div>
+            </a>
+            <a href="/images/pangrango-1.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="pangrango" data-aos="zoom-in" data-aos-delay="50">
+                <img src="/images/pangrango-1.jpg" alt="Pangrango 1">
+                <div class="overlay"><span>Gunung Pangrango</span></div>
+            </a>
+            <a href="/images/pangrango-2.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="pangrango" data-aos="zoom-in" data-aos-delay="100">
+                <img src="/images/pangrango-2.jpg" alt="Pangrango 2">
+                <div class="overlay"><span>Gunung Pangrango</span></div>
+            </a>
+
+            <!-- Salak 1 -->
+            <a href="/images/salak1.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="salak1" data-aos="zoom-in" data-aos-delay="150">
+                <img src="/images/salak1.jpg" alt="Gunung Salak 1">
+                <div class="overlay"><span>Gunung Salak 1</span></div>
+            </a>
+            <a href="/images/salakk1.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="salak1" data-aos="zoom-in" data-aos-delay="50">
+                <img src="/images/salakk1.jpg" alt="Salak 1 - A">
+                <div class="overlay"><span>Gunung Salak 1</span></div>
+            </a>
+            <a href="/images/salakkk1.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="salak1" data-aos="zoom-in" data-aos-delay="100">
+                <img src="/images/salakkk1.jpg" alt="Salak 1 - B">
+                <div class="overlay"><span>Gunung Salak 1</span></div>
+            </a>
+
+            <!-- Salak 2 -->
+            <a href="/images/salak2.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="salak2" data-aos="zoom-in" data-aos-delay="150">
+                <img src="/images/salak2.jpg" alt="Gunung Salak 2">
+                <div class="overlay"><span>Gunung Salak 2</span></div>
+            </a>
+            <a href="/images/salak2-a.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="salak2" data-aos="zoom-in" data-aos-delay="50">
+                <img src="/images/salak2-a.jpg" alt="Salak 2 - A">
+                <div class="overlay"><span>Gunung Salak 2</span></div>
+            </a>
+            <a href="/images/salak2-b.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="salak2" data-aos="zoom-in" data-aos-delay="100">
+                <img src="/images/salak2-b.jpg" alt="Salak 2 - B">
+                <div class="overlay"><span>Gunung Salak 2</span></div>
+            </a>
+
+            <!-- Butik -->
+            <a href="/images/butik.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="butik" data-aos="zoom-in" data-aos-delay="150">
+                <img src="/images/butik.jpg" alt="Gunung Butik" style="object-position: 30% 60%;">
+                <div class="overlay"><span>Gunung Butik</span></div>
+            </a>
+            <a href="/images/butik1-a.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="butik" data-aos="zoom-in" data-aos-delay="50">
+                <img src="/images/butik1-a.jpg" alt="Butik - A">
+                <div class="overlay"><span>Gunung Butik</span></div>
+            </a>
+            <a href="/images/butik1-b.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="butik" data-aos="zoom-in" data-aos-delay="100">
+                <img src="/images/butik1-b.jpg" alt="Butik - B">
+                <div class="overlay"><span>Gunung Butik</span></div>
+            </a>
+
+            <!-- Puncak Lumut -->
+            <a href="/images/lumut.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="lumut" data-aos="zoom-in" data-aos-delay="150">
+                <img src="/images/lumut.jpg" alt="Puncak Lumut">
+                <div class="overlay"><span>Puncak Lumut</span></div>
+            </a>
+            <a href="/images/lumut1-a.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="lumut" data-aos="zoom-in" data-aos-delay="50">
+                <img src="/images/lumut1-a.jpg" alt="Lumut - A">
+                <div class="overlay"><span>Puncak Lumut</span></div>
+            </a>
+            <a href="/images/lumut2-a.jpg" class="glightbox gallery-item" data-gallery="galeri" data-mountain="lumut" data-aos="zoom-in" data-aos-delay="100">
+                <img src="/images/lumut2-a.jpg" alt="Lumut - B">
+                <div class="overlay"><span>Puncak Lumut</span></div>
+            </a>
+
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 50, duration: 600 });
+
+        let lightbox = GLightbox({ touchNavigation: true, loop: true });
+
+        // Filter logic
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const items = document.querySelectorAll('.gallery-item');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                const filter = btn.dataset.filter;
+
+                items.forEach(item => {
+                    if (filter === 'all' || item.dataset.mountain === filter) {
+                        item.classList.remove('hidden');
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                // Rebuild lightbox with visible items only
+                lightbox.destroy();
+                lightbox = GLightbox({
+                    touchNavigation: true,
+                    loop: true,
+                    elements: Array.from(document.querySelectorAll('.gallery-item:not(.hidden)')).map(el => ({
+                        href: el.getAttribute('href'),
+                        type: 'image'
+                    }))
+                });
+            });
+        });
+    </script>
+</body>
+</html>
