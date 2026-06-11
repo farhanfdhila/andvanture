@@ -3,205 +3,334 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Andvanturee</title>
-    @vite('resources/css/app.css')
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-    <style> body { font-family: 'Space Grotesk', sans-serif; } </style>
-</head>
-<body class="text-gray-900 p-6 md:p-12 overflow-x-hidden">
+    <title>Reminiscence - Cerita Petualangan</title>
+    <meta name="description" content="A little journey through time of Aan — cerita petualangan mendaki gunung dan menjelajah alam.">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0B1120;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #10B981;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
 
-    <header class="max-w-6xl mx-auto mb-16 relative">
-        <div class="relative z-10 bg-memphis-mint border-4 border-black p-8 shadow-memphis inline-block">
-            <h1 class="text-5xl md:text-6xl font-bold uppercase tracking-tight mb-4">Reminiscence</h1>
-            <p class="text-xl font-bold bg-white inline-block px-2 border-2 border-black transform -rotate-2">A little journey through time of Aan</p>
+        /* Nav */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 24px;
+            gap: 12px;
+        }
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            background: linear-gradient(to bottom, rgba(11,17,32,0.4), var(--bg-color)), url('/images/merbabu.jpg') center/cover no-repeat;
+        }
+        .hero-content {
+            z-index: 2;
+            padding: 0 20px;
+        }
+        .hero h1 {
+            font-size: clamp(2.8rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: -2px;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #94A3B8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.4rem);
+            color: var(--text-muted);
+            font-weight: 300;
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-15px) translateX(-50%); }
+            60% { transform: translateY(-8px) translateX(-50%); }
+        }
+
+        /* Main Grid */
+        main {
+            max-width: 1200px;
+            margin: -80px auto 80px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        @media (min-width: 640px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (min-width: 1024px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+
+        /* Card Design */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: inherit;
+        }
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .card-img {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+        .card-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        .card:hover .card-img img {
+            transform: scale(1.05);
+        }
+        .badge {
+            position: absolute;
+            top: 14px;
+            left: 14px;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-main);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .card-content {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+        .card-sub {
+            color: var(--accent);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+        }
+        .card-date {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .read-more {
+            color: #fff;
+            opacity: 0;
+            transform: translateX(-8px);
+            transition: all 0.3s ease;
+        }
+        .card:hover .read-more {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive Mobile */
+        @media (max-width: 600px) {
+            .top-nav { padding: 12px 16px; }
+            .nav-link { padding: 8px 14px; font-size: 0.8rem; }
+            .hero { min-height: 400px; }
+            main { margin-top: -50px; padding: 0 16px; margin-bottom: 60px; }
+            .card-img { height: 180px; }
+            .card-content { padding: 16px; }
+            .card-title { font-size: 1.15rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="/galeri/" class="nav-link">Galeri Pendakian</a>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="1000">
+            <h1>Reminiscence</h1>
+            <p>A little journey through time of Aan</p>
         </div>
+        <div class="scroll-indicator">Scroll down</div>
     </header>
 
-    <main class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <main>
+        <div class="grid">
+            <!-- Card 1: Gunung Merbabu -->
+            <a href="/cerita/gunung-merbabu/" class="card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-img">
+                    <img src="/images/merbabu.jpg" alt="Gunung Merbabu">
+                    <span class="badge">Jawa Tengah</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Gunung Merbabu</h2>
+                    <p class="card-sub">Via Gancik Selo</p>
+                    <div class="card-date">
+                        <span>13 - 15 November 2024</span>
+                        <span class="read-more">Baca Cerita &rarr;</span>
+                    </div>
+                </div>
+            </a>
 
-        
-        <!-- Card 1: Gunung Merbabu -->
-    <article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <img src="{{ asset('images/merbabu.jpg') }}" alt="Gunung Merbabu" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Tengah</div>
-    </div>
-    <!-- BATAS UBAHAN -->
+            <!-- Card 2: Gunung Pangrango -->
+            <a href="/cerita/gunung-pangrango/" class="card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-img">
+                    <img src="/images/pangrango.jpg" alt="Gunung Pangrango">
+                    <span class="badge">Jawa Barat</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Gunung Pangrango</h2>
+                    <p class="card-sub">Via Cibodas</p>
+                    <div class="card-date">
+                        <span>7 Mei 2026</span>
+                        <span class="read-more">Baca Cerita &rarr;</span>
+                    </div>
+                </div>
+            </a>
 
-    <div class="p-6 flex flex-col row">
-        <!-- ... (kode judul dan deskripsi bawahnya tetep sama) ... -->
-            <div class="p-6 flex flex-col grow">
-                <h2 class="text-2xl font-bold mb-2 uppercase">Gunung Merbabu</h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Via Gancik Selo</p>
-                <p class="mb-6 grow">13 - 15 November 2024 </p>
-                <a href="{{ url('/cerita/gunung-merbabu') }}" class="block text-center w-full bg-memphis-blue text-white font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white hover:text-memphis-blue mt-auto">
-                    Look a Story ->
-                </a>
-            </div>
-        </article>
+            <!-- Card 3: Gunung Salak 1 -->
+            <a href="/cerita/gunung-salak-1/" class="card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-img">
+                    <img src="/images/salak1.jpg" alt="Gunung Salak 1">
+                    <span class="badge">Jawa Barat</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Gunung Salak 1</h2>
+                    <p class="card-sub">Via Cimelati</p>
+                    <div class="card-date">
+                        <span>13 April 2024</span>
+                        <span class="read-more">Baca Cerita &rarr;</span>
+                    </div>
+                </div>
+            </a>
 
-        <!-- Card 2: Gunung Pangrango -->
-    <article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <img src="{{ asset('images/pangrango.jpg') }}" alt="Gunung Merbabu" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Barat</div>
-    </div>
-    <!-- BATAS UBAHAN -->
+            <!-- Card 4: Gunung Salak 2 -->
+            <a href="/cerita/gunung-salak-2/" class="card" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-img">
+                    <img src="/images/salak2.jpg" alt="Gunung Salak 2">
+                    <span class="badge">Jawa Barat</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Gunung Salak 2</h2>
+                    <p class="card-sub">Via Ajisaka</p>
+                    <div class="card-date">
+                        <span>10 Oktober 2024</span>
+                        <span class="read-more">Baca Cerita &rarr;</span>
+                    </div>
+                </div>
+            </a>
 
-    <div class="p-6 flex flex-col flex-grow">
-        <!-- ... (kode judul dan deskripsi bawahnya tetep sama) ... -->
-            <div class="p-6 flex flex-col flex-grow">
-                <h2 class="text-2xl font-bold mb-2 uppercase">Gunung Pangrango</h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Via Cibodas</p>
-                <p class="mb-6 flex-grow">7 Mei 2026</p>
-                <a href="{{ url('/cerita/gunung-pangrango') }}" class="block text-center w-full bg-memphis-pink text-white font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white hover:text-memphis-pink mt-auto">
-                    Look a Story ->
-                </a>
-            </div>
-        </article>
+            <!-- Card 5: Gunung Butik -->
+            <a href="/cerita/gunung-butik/" class="card" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-img">
+                    <img src="/images/butik.jpg" alt="Gunung Butik" style="object-position: 30% 60%;">
+                    <span class="badge">Jawa Barat</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Gunung Butik</h2>
+                    <p class="card-sub">Via Hanjawong</p>
+                    <div class="card-date">
+                        <span>21 Agustus 2024</span>
+                        <span class="read-more">Baca Cerita &rarr;</span>
+                    </div>
+                </div>
+            </a>
 
-        <!-- Card 3: Gunung Salak 1 -->
-<article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <img src="{{ asset('images/salak1.jpg') }}" alt="Gunung Merbabu" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Barat</div>
-    </div>
-    <!-- BATAS UBAHAN -->
-
-    <div class="p-6 flex flex-col flex-grow">
-        <!-- ... (kode judul dan deskripsi bawahnya tetep sama) ... -->
-            <div class="p-6 flex flex-col flex-grow">
-                <h2 class="text-2xl font-bold mb-2 uppercase">Gunung Salak 1</h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Via Cimelati</p>
-                <p class="mb-6 flex-grow">13 April 2024</p>
-                <a href="{{ url('/cerita/gunung-salak-1') }}" class="block text-center w-full bg-memphis-yellow text-black font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white hover:text-black mt-auto">
-                    Look a Story ->
-                </a>
-            </div>
-        </article>
-
-        <!-- Card 4: Gunung Salak 2 -->
-    <article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <img src="{{ asset('images/salak2.jpg') }}" alt="Gunung Merbabu" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Barat</div>
-    </div>
-    <!-- BATAS UBAHAN -->
-
-    <div class="p-6 flex flex-col flex-grow">
-        <!-- ... (kode judul dan deskripsi bawahnya tetep sama) ... -->
-                <h2 class="text-2xl font-bold mb-2 uppercase">Gunung Salak 2</h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Via Ajisaka</p>
-                <p class="mb-6 flex-grow">10 Oktober 2024</p>
-                <a href="{{ url('/cerita/gunung-salak-2') }}" class="block text-center w-full bg-memphis-mint text-black font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white mt-auto">
-                    Look a Story ->
-                </a>
-            </div>
-        </article>
-
-        <!-- Card 5: Gunung Butik -->
-    <article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <img src="{{ asset('images/butik.jpg') }}" alt="Gunung Butik" class="w-full h-full object-cover object-[30%_60%] grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Barat</div>
-    </div>
-    <!-- BATAS UBAHAN -->
-
-    <div class="p-6 flex flex-col flex-grow">
-        <!-- ... (kode judul dan deskripsi bawahnya tetep sama) ... -->
-                <h2 class="text-2xl font-bold mb-2 uppercase">Gunung Butik</h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Via Hanjawong</p>
-                <p class="mb-6 flex-grow">21 Agustus 2024</p>
-                <a href="{{ url('/cerita/gunung-butik') }}" class="block text-center w-full bg-memphis-blue text-white font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white hover:text-memphis-blue mt-auto">
-                    Look a Story ->
-                </a>
-            </div>
-        </article>
-
-        <!-- Card 6: Puncak Lumut -->
-    <article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <img src="{{ asset('images/lumut.jpg') }}" alt="Gunung Merbabu" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Barat</div>
-    </div>
-    <!-- BATAS UBAHAN -->
-
-    <div class="p-6 flex flex-col flex-grow">
-        <!-- ... (kode judul dan deskripsi bawahnya tetep sama) ... -->
-                <h2 class="text-2xl font-bold mb-2 uppercase">Puncak Lumut</h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Via Sukamakmur</p>
-                <p class="mb-6 flex-grow">28 Juli 2025</p>
-                <a href="{{ url('/cerita/puncak-lumut') }}" class="block text-center w-full bg-memphis-pink text-white font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white hover:text-memphis-pink mt-auto">
-                    Look a Story ->
-                </a>
-            </div>
-        </article>
-
-        <!-- Card 7: Touring -->
-        <article class="bg-white border-4 border-black shadow-memphis transition-all duration-300 hover:-translate-y-2 group flex flex-col">
-    
-    <!-- BAGIAN INI YANG KITA UBAH -->
-    <!-- <div class="h-56 bg-memphis-yellow border-b-4 border-black relative flex-shrink-0 overflow-hidden">
-        
-        <!-- Masukin Fotonya Disini -->
-        <!-- Fungsi asset() itu cara Laravel buat manggil file dari folder public -->
-        <!-- <img src="{{ asset('images/touring.jpg') }}" alt="Gunung Butik" class="w-full h-full object-cover object-[30%_60%] grayscale group-hover:grayscale-0 transition duration-500">
-        
-        <!-- Badge "Jawa Tengah" tetep di atas fotonya -->
-        <!-- <div class="absolute top-4 left-4 bg-memphis-pink text-white font-bold py-1 px-3 border-2 border-black -rotate-3 z-10">Jawa Tengah</div> -->
-    <!-- </div>
-            <div class="p-6 flex flex-col flex-grow">
-                <h2 class="text-2xl font-bold mb-2 uppercase"></h2>
-                <p class="text-sm font-bold text-gray-600 mb-4">Kemana aje yang penting ngaspal</p>
-                <p class="mb-6 flex-grow">Ini cerita tentang touring gua hehe</p>
-                <a href="{{ url('/cerita/touring') }}" class="block text-center w-full bg-black text-white font-bold py-3 border-4 border-black shadow-memphis transition-all active:translate-y-1 active:translate-x-1 active:shadow-none hover:bg-white hover:text-black mt-auto">
-                    Look a Story ->
-                </a> -->
-            <!-- </div> -->
-        <!-- </article> --> 
-
+            <!-- Card 6: Puncak Lumut -->
+            <a href="/cerita/puncak-lumut/" class="card" data-aos="fade-up" data-aos-delay="300">
+                <div class="card-img">
+                    <img src="/images/lumut.jpg" alt="Puncak Lumut">
+                    <span class="badge">Jawa Barat</span>
+                </div>
+                <div class="card-content">
+                    <h2 class="card-title">Puncak Lumut</h2>
+                    <p class="card-sub">Via Sukamakmur</p>
+                    <div class="card-date">
+                        <span>28 Juli 2025</span>
+                        <span class="read-more">Baca Cerita &rarr;</span>
+                    </div>
+                </div>
+            </a>
+        </div>
     </main>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            once: true,
+            offset: 50,
+            duration: 800
+        });
+    </script>
 </body>
 </html>
