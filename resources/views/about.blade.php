@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tentang Aan - Reminiscence</title>
+    <meta name="description" content="Profil Farhan / Aan di balik Reminiscence">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0B1120;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent: #10B981;
+            --card-bg: rgba(30, 41, 59, 0.7);
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Nav */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: flex-end;
+            padding: 20px 24px;
+            gap: 12px;
+        }
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s ease;
+        }
+        .nav-link:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Container */
+        .container {
+            max-width: 800px;
+            margin: 100px auto 60px auto;
+            padding: 0 20px;
+        }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: color 0.3s ease;
+        }
+        .back-btn:hover {
+            color: #fff;
+        }
+
+        .glass-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        @media (min-width: 768px) {
+            .glass-card {
+                flex-direction: row;
+                align-items: center;
+                gap: 40px;
+            }
+        }
+
+        .profile-img-container {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            overflow: hidden;
+            flex-shrink: 0;
+            border: 4px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            margin: 0 auto;
+        }
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-content h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #fff, #10B981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .profile-content p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .profile-content p strong {
+            color: #fff;
+        }
+
+        .cta-box {
+            margin-top: 40px;
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0,0,0,0.3));
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .cta-box h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .cta-box p {
+            color: var(--text-muted);
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="/" class="nav-link">Beranda</a>
+        <a href="/galeri/" class="nav-link">Galeri Pendakian</a>
+    </nav>
+
+    <div class="container">
+        <a href="/" class="back-btn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+            </svg>
+            Kembali
+        </a>
+
+        <div class="glass-card">
+            <div class="profile-img-container">
+                <img src="/images/about-profile.webp" alt="Farhan / Aan">
+            </div>
+            
+            <div class="profile-content">
+                <h1>Hai, Gue Aan</h1>
+                <p>
+                    Welcome to web sederhana gua <strong>Reminiscence</strong>. Web ini adalah tempat gua mendokumentasikan setiap langkah, lelah, dan tawa dari perjalanan menjelajah alam dan hiking.
+                </p>
+                <p>
+                    Setiap perjalanan punya cerita, dan setiap cerita layak untuk dikenang. 
+                </p>
+            </div>
+        </div>
+
+        <div class="cta-box">
+            <h3>Don't waste ur time for nothing!</h3>
+            <p>"Dialah Yang menjadikan bumi itu mudah bagi kamu, maka berjalanlah di segala penjurunya dan makanlah sebahagian dari rezeki-Nya. Dan hanya kepada-Nya-lah kamu (kembali setelah) dibangkitkan." <br>(QS. Al-Mulk: 15)</p>
+            <a href="/" class="btn-primary">
+                Look Here
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

@@ -62,7 +62,7 @@
             justify-content: center;
             text-align: center;
             position: relative;
-            background: linear-gradient(to bottom, rgba(11,17,32,0.4), var(--bg-color)), url('/images/merbabu.jpg') center/cover no-repeat;
+            background: linear-gradient(to bottom, rgba(11,17,32,0.4), var(--bg-color)), url('/images/bg-home2.webp') center/cover no-repeat;
         }
         .hero-content {
             z-index: 2;
@@ -131,8 +131,8 @@
             color: inherit;
         }
         .card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
             border-color: rgba(255,255,255,0.1);
         }
         .card-img {
@@ -213,6 +213,7 @@
 <body>
 
     <nav class="top-nav">
+        <a href="/about" class="nav-link">Tentang</a>
         <a href="/galeri/" class="nav-link">Galeri Pendakian</a>
     </nav>
 
@@ -221,15 +222,29 @@
             <h1>Reminiscence</h1>
             <p>A little journey through time of Aan</p>
         </div>
-        <div class="scroll-indicator">Scroll down</div>
+        <div class="scroll-indicator">
+            Scroll down
+            <svg class="w-6 h-6 mx-auto mt-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width: 24px; height: 24px; margin: 8px auto 0 auto;">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+            </svg>
+        </div>
     </header>
 
     <main>
+        <div class="filter-container" style="margin-bottom: 2rem; display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <input type="text" id="searchInput" placeholder="Cari gunung..." style="padding: 10px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: white; outline: none; width: 100%; max-width: 300px;">
+            <select id="regionFilter" style="padding: 10px 16px; border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: white; outline: none;">
+                <option value="all">Semua Wilayah</option>
+                <option value="Jawa Barat">Jawa Barat</option>
+                <option value="Jawa Tengah">Jawa Tengah</option>
+            </select>
+        </div>
+
         <div class="grid">
             <!-- Card 1: Gunung Merbabu -->
             <a href="/cerita/gunung-merbabu/" class="card" data-aos="fade-up" data-aos-delay="100">
                 <div class="card-img">
-                    <img src="/images/merbabu.jpg" alt="Gunung Merbabu">
+                    <img src="/images/merbabu.webp" alt="Gunung Merbabu">
                     <span class="badge">Jawa Tengah</span>
                 </div>
                 <div class="card-content">
@@ -245,7 +260,7 @@
             <!-- Card 2: Gunung Pangrango -->
             <a href="/cerita/gunung-pangrango/" class="card" data-aos="fade-up" data-aos-delay="200">
                 <div class="card-img">
-                    <img src="/images/pangrango.jpg" alt="Gunung Pangrango">
+                    <img src="/images/pangrango.webp" alt="Gunung Pangrango">
                     <span class="badge">Jawa Barat</span>
                 </div>
                 <div class="card-content">
@@ -261,7 +276,7 @@
             <!-- Card 3: Gunung Salak 1 -->
             <a href="/cerita/gunung-salak-1/" class="card" data-aos="fade-up" data-aos-delay="300">
                 <div class="card-img">
-                    <img src="/images/salak1.jpg" alt="Gunung Salak 1">
+                    <img src="/images/salak1.webp" alt="Gunung Salak 1">
                     <span class="badge">Jawa Barat</span>
                 </div>
                 <div class="card-content">
@@ -277,7 +292,7 @@
             <!-- Card 4: Gunung Salak 2 -->
             <a href="/cerita/gunung-salak-2/" class="card" data-aos="fade-up" data-aos-delay="100">
                 <div class="card-img">
-                    <img src="/images/salak2.jpg" alt="Gunung Salak 2">
+                    <img src="/images/salak2.webp" alt="Gunung Salak 2">
                     <span class="badge">Jawa Barat</span>
                 </div>
                 <div class="card-content">
@@ -293,7 +308,7 @@
             <!-- Card 5: Gunung Butik -->
             <a href="/cerita/gunung-butik/" class="card" data-aos="fade-up" data-aos-delay="200">
                 <div class="card-img">
-                    <img src="/images/butik.jpg" alt="Gunung Butik" style="object-position: 30% 60%;">
+                    <img src="/images/butik.webp" alt="Gunung Butik" style="object-position: 30% 60%;">
                     <span class="badge">Jawa Barat</span>
                 </div>
                 <div class="card-content">
@@ -309,7 +324,7 @@
             <!-- Card 6: Puncak Lumut -->
             <a href="/cerita/puncak-lumut/" class="card" data-aos="fade-up" data-aos-delay="300">
                 <div class="card-img">
-                    <img src="/images/lumut.jpg" alt="Puncak Lumut">
+                    <img src="/images/lumut.webp" alt="Puncak Lumut">
                     <span class="badge">Jawa Barat</span>
                 </div>
                 <div class="card-content">
@@ -330,6 +345,35 @@
             once: true,
             offset: 50,
             duration: 800
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const searchInput = document.getElementById('searchInput');
+            const regionFilter = document.getElementById('regionFilter');
+            const cards = document.querySelectorAll('.card');
+
+            function filterCards() {
+                const searchText = searchInput.value.toLowerCase();
+                const region = regionFilter.value;
+
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title').textContent.toLowerCase();
+                    const badge = card.querySelector('.badge').textContent;
+                    
+                    const matchSearch = title.includes(searchText);
+                    const matchRegion = region === 'all' || badge === region;
+
+                    if (matchSearch && matchRegion) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            if(searchInput) searchInput.addEventListener('input', filterCards);
+            if(regionFilter) regionFilter.addEventListener('change', filterCards);
         });
     </script>
 </body>
